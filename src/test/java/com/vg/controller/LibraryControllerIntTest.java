@@ -40,7 +40,7 @@ public class LibraryControllerIntTest {
 
     @Test
     void getAllBooks() {
-        when(libraryService.getAllBooks()).thenReturn(Flux.just(testBook));
+        when(libraryService.findAllBooks(0,10)).thenReturn(Flux.just(testBook));
 
         webTestClient.get().uri("/library/books")
                 .exchange()

@@ -46,7 +46,7 @@ class GlobalWebFluxExceptionHandlerTest {
     @Test
     void handleBookNotFoundException_shouldReturnNotFoundStatus() throws Exception {
         testExceptionHandling(
-                new BookNotFoundException("Book not found"),
+                new BookNotFoundException("BookNotFoundException"),
                 HttpStatus.NOT_FOUND
         );
     }
@@ -54,7 +54,15 @@ class GlobalWebFluxExceptionHandlerTest {
     @Test
     void handleBookConcurrencyException_shouldReturnConflictStatus() throws Exception {
         testExceptionHandling(
-                new BookConcurrencyException("Concurrent modification"),
+                new BookConcurrencyException("BookConcurrencyException"),
+                HttpStatus.CONFLICT
+        );
+    }
+
+    @Test
+    void handleBorrowRecordException() throws Exception {
+        testExceptionHandling(
+                new BorrowRecordNotFoundException("BorrowRecordNotFoundException"),
                 HttpStatus.CONFLICT
         );
     }

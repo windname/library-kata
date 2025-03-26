@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -34,8 +36,9 @@ public class LibraryService {
         this.borrowedBookRepository = borrowedBookRepository;
     }
 
-    public Flux<Book> getAllBooks() {
-        return bookRepository.findAll();
+    public Flux<Book> findAllBooks(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return bookRepository.findAllBy(pageable);
     }
 
     public Mono<Book> addBook(Book book) {

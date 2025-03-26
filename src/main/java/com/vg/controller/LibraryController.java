@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
 import static com.vg.mapper.BookMappers.toEntity;
 import static com.vg.mapper.BookMappers.bookToDto;
 import static com.vg.mapper.BorrowedBookMappers.borrowedBookToDto;
@@ -30,8 +31,10 @@ public class LibraryController {
 
     @Operation(summary = "List of books")
     @GetMapping("/books")
-    public Flux<BookResponseDTO> getAllBooks() {
-        return libraryService.getAllBooks().map(bookToDto);
+    public Flux<BookResponseDTO> getAllBooks(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return libraryService.findAllBooks(page, size).map(bookToDto);
     }
 
     @Operation(summary = "Add a new book to the library")

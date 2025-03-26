@@ -24,9 +24,9 @@ class LibraryControllerTest {
     @Test
     void returnAllBooks() {
         Book book = new Book(UUID.randomUUID(), "Test Book", "Author", true, 0L);
-        when(libraryService.getAllBooks()).thenReturn(Flux.just(book));
+        when(libraryService.findAllBooks(0,1)).thenReturn(Flux.just(book));
 
-        Flux<BookResponseDTO> result = controller.getAllBooks();
+        Flux<BookResponseDTO> result = controller.getAllBooks(0,1);
 
         StepVerifier.create(result)
                 .expectNextMatches(dto -> dto.title().equals("Test Book"))
